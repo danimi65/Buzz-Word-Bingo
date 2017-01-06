@@ -8,7 +8,8 @@ let buzzwordList = {
   "buzzwords": []
 };
 
-let setScore;
+let setScore = 0;
+let heard = false;
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -29,11 +30,19 @@ app.post('/buzzword', (req, res, next) => {
 });
 
 app.put('/buzzword', (req, res, next) => {
+  let response = {success : false, newScore: null};
   for(var i = 0; i < buzzwordList.buzzwords.length; i++){
-    if(buzzwordList.buzzwords[i].buzzword === req.body.buzzword){
-      setScore =+ parseInt(buzzword.points);
+    if(buzzwordList.buzzwords[i].buzzword === req.body.buzzword /*&& buzzwordList.buzzwords[i].heard === false*/){
+      setScore += parseInt(buzzwordList.buzzwords[i].points);
+        buzzwordList.buzzwords[i].heard = true;
+      res.send(`{ "success": true, newScore: ${setScore} }`);
     }
   }
+    res.send('{"success": false}');
+
+});
+
+app.delete('/buzzword', (req, res, next) =>{
 
 });
 
