@@ -32,10 +32,10 @@ app.post('/buzzword', (req, res, next) => {
 app.put('/buzzword', (req, res, next) => {
   let response = {success : false, newScore: null};
   for(var i = 0; i < buzzwordList.buzzwords.length; i++){
-    if(buzzwordList.buzzwords[i].buzzword === req.body.buzzword /*&& buzzwordList.buzzwords[i].heard === false*/){
+    if(buzzwordList.buzzwords[i].buzzword === req.body.buzzword){
       setScore += parseInt(buzzwordList.buzzwords[i].points);
         buzzwordList.buzzwords[i].heard = true;
-      res.send(`{ "success": true, newScore: ${setScore} }`);
+      res.send(`{ "success": "true", newScore: ${setScore} }`);
     }
   }
     res.send('{"success": false}');
@@ -43,6 +43,13 @@ app.put('/buzzword', (req, res, next) => {
 });
 
 app.delete('/buzzword', (req, res, next) =>{
+  for(var i = 0; i < buzzwordList.buzzwords.length; i++){
+    if(buzzwordList.buzzwords[i].buzzword === req.body.buzzword){
+      buzzwordList.buzzwords.splice(i, 1);
+      res.send('{"success": true');
+    }
+  }
+  res.send('{"success": false');
 
 });
 
