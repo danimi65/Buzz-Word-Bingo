@@ -53,6 +53,18 @@ app.delete('/buzzword', (req, res, next) =>{
 
 });
 
+function reset(){
+  setScore = 0;
+  buzzwordList.buzzwords = [];
+  
+}
+
+
+app.post('/reset', (req, res, next) => {
+  reset();
+  res.send('{"success": true}');
+});
+
 
 var server = app.listen(3000, () => {
   var host = server.address().address;
